@@ -59,6 +59,10 @@ func interestingGoroutine(g string) (*goroutine, error) {
 		// Ignore HTTP keep alives
 		strings.Contains(stack, ").readLoop(") ||
 		strings.Contains(stack, ").writeLoop(") ||
+
+		// Ignore http2 and grpc keepalive
+		strings.Contains(stack, "http2Server) keepalive(") ||
+
 		// Below are the stacks ignored by the upstream leaktest code.
 		strings.Contains(stack, "testing.Main(") ||
 		strings.Contains(stack, "testing.(*T).Run(") ||
